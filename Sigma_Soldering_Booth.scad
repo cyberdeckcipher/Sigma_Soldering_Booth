@@ -4,6 +4,8 @@ width  = 900;
 depth  = 150;
 
 //material standard sizes
+plasticSize1 = 1;
+glassSize1   = 5;
 plywoodSize1 = 5;
 plywoodSize2 = 10;
 plywoodSize3 = 15;
@@ -91,7 +93,67 @@ module BottonExhaustEntrande(){
         ExhaustExtHeight])
         BottomExhaustTopPanel();
 }
-//
+
+module LeftFoldingDoor(){
+    cube([
+        plywoodSize2,
+        height,
+        height
+    ]);
+}
+
+module RightFoldingDoor(){
+    cube([
+        plywoodSize2,
+        height,
+        height
+    ]);
+}
+
+module FoldingCelling(){
+    cube([
+        width,
+        height,
+        plywoodSize2
+    ]);
+}
+
+module BottonExhaustCover(){
+    cube([
+        width - (plywoodSize2),
+        ExhaustExtHeight,
+        plywoodSize1
+    ]);
+}
+
+module SolderingFloor(){
+    cube([
+        width - (plywoodSize2*2),
+        height - ExhaustExtHeight,
+        plywoodSize1
+    ]);
+}
+
+module PaintingFloor(){
+    cube([
+        width - (plywoodSize2*2),
+        height,
+        plasticSize1
+    ]);
+}
+
+module FoldingFloor(){
+    translate([plywoodSize2
+        ,plywoodSize2-height
+        ,plasticSize1])
+        SolderingFloor();
+    translate([plywoodSize2,
+        plywoodSize2- ExhaustExtHeight,plasticSize1])
+        BottonExhaustCover();
+    translate([plywoodSize2,
+    plywoodSize2-height,0])
+        PaintingFloor();
+}
 
 //Mounting parts
     //Backpanel
@@ -116,3 +178,14 @@ translate([width-plywoodSize2, plywoodSize2 , plywoodSize1])
 
 BottonExhaustEntrande();
 TopExhaustEntrance();
+
+translate([0,-height+plywoodSize2,0])
+    LeftFoldingDoor();
+
+translate([width-plywoodSize2,-height+plywoodSize2,0])
+    RightFoldingDoor();
+
+translate([0,0-height,height])
+    FoldingCelling();
+    
+FoldingFloor();
