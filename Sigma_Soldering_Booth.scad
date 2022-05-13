@@ -1,7 +1,10 @@
-//size in mm
+ //size in mm
 height = 450;
 width  = 900;
 depth  = 150;
+
+//Computing sizes
+ExhaustExtHeight = 50;
 
 //material standard sizes
 plasticSize1 = 1;
@@ -9,9 +12,6 @@ glassSize1   = 5;
 plywoodSize1 = 5;
 plywoodSize2 = 10;
 plywoodSize3 = 15;
-
-//Computing sizes
-ExhaustExtHeight = 50;
 
 //Module Part definition
 module BackPanel(){
