@@ -79,7 +79,7 @@ module BottonExhaustSupport(){
 module FoldingDoor(){
     cube([
         plywoodSize2,
-        width/2,
+        width/2-plywoodSize2,
         height-plywoodSize2
     ]);
 }
@@ -157,25 +157,31 @@ translate([0,0,height-plywoodSize2])
 //Internals
     //Top Exhaust Bottom Panel
 translate([plywoodSize1,
-    plywoodSize2+(ExhaustExtHeight/2),
-    height-ExhaustExtHeight-plywoodSize1])
+        plywoodSize2+(ExhaustExtHeight/2),
+        height-ExhaustExtHeight-plywoodSize1])
     ExhaustInternalPanel();
     
     //Botton Exhaust Top Panel
 translate([plywoodSize1,
-    (plywoodSize2*2)+(ExhaustExtHeight/2),
-    ExhaustExtHeight-(plywoodSize1*2)])
+        (plywoodSize2*2)+(ExhaustExtHeight/2),
+        ExhaustExtHeight-(plywoodSize1*2)])
     BottomExhaustTopPanel();
     
 // ------------------
 //Folding Parts
-translate([0,-height+plywoodSize2,0])
+translate([0,
+        -width/2+(plywoodSize2*2),
+        0])
     FoldingDoor();
 
-translate([width-plywoodSize2,-height+plywoodSize2,0])
+translate([width-plywoodSize2,
+        -width/2+(plywoodSize2*2),
+        0])
     FoldingDoor();
 
-translate([0,plywoodSize2-height,height-plywoodSize2])
+translate([0,
+        plywoodSize2-height,
+        height-plywoodSize2])
     FoldingCelling();
     
 //FoldingFloor
@@ -187,12 +193,12 @@ translate([plywoodSize2,
     
     //Soldering botton exhaust cover
 translate([plywoodSize2,
-    -ExhaustExtHeight/2,
-    plasticSize1])
+        -ExhaustExtHeight/2,
+        plasticSize1])
     BottonExhaustCover();
     
     //Painting floor
 translate([plywoodSize2,
-    ExhaustExtHeight-plywoodSize2
-    -plywoodSize1-height,0])
+        ExhaustExtHeight-plywoodSize2
+        -plywoodSize1-height,0])
     PaintingFloor();
