@@ -11,14 +11,13 @@ plasticSize1 = 1;
 glassSize1   = 5;
 plywoodSize1 = 5;
 plywoodSize2 = 10;
-plywoodSize3 = 15;
 
 //Module Part definition
 module BackPanel(){
     cube([
-        width - (plywoodSize2*2),
+        width,
         plywoodSize2, 
-        height - plywoodSize1
+        height
     ]);
 }
 
@@ -26,15 +25,15 @@ module Pegboard(){
     cube([
         width - plywoodSize2,
         plywoodSize1,
-        height-(ExhaustExtHeight*2) - (plywoodSize1*2)
+        height-(ExhaustExtHeight*2)
     ]);
 }
 
 module SidePanel(){
     cube([
         plywoodSize2,
-        depth  - plywoodSize2,
-        height - plywoodSize1,
+        depth-plywoodSize2,
+        height-plywoodSize2+plywoodSize1,
     ]);
 }
 
@@ -48,7 +47,7 @@ module CellingPanel(){
 module FloorPanel(){
     cube([
         width,
-        depth-plywoodSize2,
+        depth-plywoodSize2-plywoodSize2-plywoodSize1,
         plywoodSize1
     ]);
 }
@@ -77,50 +76,25 @@ module BottonExhaustSupport(){
     ]);
 }
 
-module TopExhaustEntrance(){
-    translate([0,0,height])
-        CellingPanel();
-    translate([plywoodSize1,plywoodSize2,
-        height- ExhaustExtHeight - plywoodSize2 + plywoodSize1])
-        ExhaustInternalPanel();
-}
-
-module BottonExhaustEntrande(){
-    translate([0, plywoodSize2, 0])
-        FloorPanel();
-    translate([plywoodSize1,
-        plywoodSize2*2,
-        ExhaustExtHeight])
-        BottomExhaustTopPanel();
-}
-
-module LeftFoldingDoor(){
+module FoldingDoor(){
     cube([
         plywoodSize2,
-        height,
-        height
-    ]);
-}
-
-module RightFoldingDoor(){
-    cube([
-        plywoodSize2,
-        height,
-        height
+        width/2,
+        height-plywoodSize2
     ]);
 }
 
 module FoldingCelling(){
     cube([
         width,
-        height,
+        height-plywoodSize2,
         plywoodSize2
     ]);
 }
 
 module BottonExhaustCover(){
     cube([
-        width - (plywoodSize2),
+        width-(plywoodSize2*2),
         ExhaustExtHeight,
         plywoodSize1
     ]);
@@ -128,64 +102,97 @@ module BottonExhaustCover(){
 
 module SolderingFloor(){
     cube([
-        width - (plywoodSize2*2),
-        height - ExhaustExtHeight,
+        width-(plywoodSize2*2),
+        height-ExhaustExtHeight-plywoodSize2,
         plywoodSize1
     ]);
 }
 
 module PaintingFloor(){
     cube([
-        width - (plywoodSize2*2),
-        height,
+        width-(plywoodSize2*2),
+        height-plywoodSize2,
         plasticSize1
     ]);
 }
 
-module FoldingFloor(){
-    translate([plywoodSize2
-        ,plywoodSize2-height
-        ,plasticSize1])
-        SolderingFloor();
-    translate([plywoodSize2,
-        plywoodSize2- ExhaustExtHeight,plasticSize1])
-        BottonExhaustCover();
-    translate([plywoodSize2,
-    plywoodSize2-height,0])
-        PaintingFloor();
-}
+// ----------------
+//  Mounting parts
+// ----------------
 
-//Mounting parts
+//Fixed Body
     //Backpanel
-translate([plywoodSize2,
-    depth - plywoodSize2,
-    plywoodSize1])
+translate([0,depth,0])
     BackPanel();
 
     //Pegboard
 translate([plywoodSize1,
-    depth - plywoodSize2 - ExhaustExtHeight,
-    ExhaustExtHeight + plywoodSize1])
+    depth - plywoodSize2 - (ExhaustExtHeight/2),
+    ExhaustExtHeight - plywoodSize1])
     Pegboard();
 
     //Right Side Panel
-translate([0, plywoodSize2 , plywoodSize1])
+translate([0, 
+        plywoodSize2 , 
+        plywoodSize1])
     SidePanel();
 
     //Left Side Panel
-translate([width-plywoodSize2, plywoodSize2 , plywoodSize1])
+translate([width-plywoodSize2, 
+            plywoodSize2 , 
+            plywoodSize1])
     SidePanel();
+    
+    // Floor Panel
+translate([0, 
+        plywoodSize2*2+plywoodSize1,
+        0])
+    FloorPanel();
+    
+    // Top Panel
+translate([0,0,height-plywoodSize2])
+    CellingPanel();
 
-BottonExhaustEntrande();
-TopExhaustEntrance();
-
+// ------------------
+//Internals
+    //Top Exhaust Bottom Panel
+translate([plywoodSize1,
+    plywoodSize2+(ExhaustExtHeight/2),
+    height-ExhaustExtHeight-plywoodSize1])
+    ExhaustInternalPanel();
+    
+    //Botton Exhaust Top Panel
+translate([plywoodSize1,
+    (plywoodSize2*2)+(ExhaustExtHeight/2),
+    ExhaustExtHeight-(plywoodSize1*2)])
+    BottomExhaustTopPanel();
+    
+// ------------------
+//Folding Parts
 translate([0,-height+plywoodSize2,0])
-    LeftFoldingDoor();
+    FoldingDoor();
 
 translate([width-plywoodSize2,-height+plywoodSize2,0])
-    RightFoldingDoor();
+    FoldingDoor();
 
-translate([0,0-height,height])
+translate([0,plywoodSize2-height,height-plywoodSize2])
     FoldingCelling();
     
-FoldingFloor();
+//FoldingFloor
+    //Soldering floor
+translate([plywoodSize2,
+        plywoodSize2+ExhaustExtHeight/2-height,
+        plasticSize1])
+    SolderingFloor();
+    
+    //Soldering botton exhaust cover
+translate([plywoodSize2,
+    -ExhaustExtHeight/2,
+    plasticSize1])
+    BottonExhaustCover();
+    
+    //Painting floor
+translate([plywoodSize2,
+    ExhaustExtHeight-plywoodSize2
+    -plywoodSize1-height,0])
+    PaintingFloor();
