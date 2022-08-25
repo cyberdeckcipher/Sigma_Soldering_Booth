@@ -198,7 +198,8 @@ translate([plywoodSize2,
     BottonExhaustCover();
     
     //Painting floor
-translate([plywoodSize2,
-        ExhaustExtHeight-plywoodSize2
-        -plywoodSize1-height,0])
-    PaintingFloor();
+rotate(0,0,90)
+    translate([plywoodSize2,
+            ExhaustExtHeight-plywoodSize2
+            -plywoodSize1-height,0])
+        PaintingFloor();
